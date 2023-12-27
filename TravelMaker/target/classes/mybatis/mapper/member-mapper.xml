@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+
+	<insert id="join">
+		INSERT INTO MEMBER
+		(
+		    NO
+		    ,ID
+		    ,PWD
+		    ,NICK
+		    ,EMAIL
+		    ,NAME
+		)
+		VALUES
+		(
+		    SEQ_MEMBER_NO.NEXTVAL
+		    , #{id}
+		    , #{pwd}
+		    , #{nick}
+		    , #{email}
+		    , #{name}
+		)	
+	</insert>
+	  
+	<select id="login" resultType="MemberVo">
+		SELECT
+		    NO
+		    ,ID
+		    ,PWD
+		    ,NICK
+		    ,ENROLL_DATE
+		    ,STATUS
+		FROM MEMBER
+		WHERE ID = #{id}
+		AND PWD = #{pwd}
+		AND STATUS = 'Y'
+	</select>
+	
+	<update id="quit">
+		UPDATE MEMBER
+	    SET 
+	        STATUS = 'N'
+		WHERE NO = #{no}
+	</update>
+	
+	<select id="list" resultType="MemberVo">
+		SELECT
+		    NO
+		    ,ID
+		    ,PWD
+		    ,NICK
+		    ,ENROLL_DATE
+		    ,STATUS
+		FROM MEMBER
+		WHERE STATUS = 'Y'
+		ORDER BY NO DESC
+	
+	</select>
+	
+	<update id="edit">
+		UPDATE MEMBER
+			SET
+			
+			<trim prefixOverrides=",">
+				<if test="pwd !=null and pwd != '' ">
+					PWD = #{pwd}
+				</if>
+				
+				<if test="nick != null and nick != '' ">			
+					, NICK =#{nick}
+				</if>
+				
+				<if test="profilePicturePath != null and profilePicturePath != '' ">			
+					, NICK =#{profilePicturePath}
+				</if>
+			</trim>
+			WHERE NO = #{no}
+			AND STATUS = 'Y'
+	</update>
+	
+</mapper>
