@@ -10,4 +10,7 @@
   	<setting name="jdbcTypeForNull" value="NULL"/>
   </settings>
   
+  <typeAliases>
+  	<typeAlias type="com.kh.travelmaker.member.vo.MemberVo" alias = "MemberVo"/>
+  </typeAliases>
 </configuration>
